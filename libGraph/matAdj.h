@@ -14,15 +14,7 @@ int **allocateMatrix(int n);
 @para arq: ponteiro para o arquivo que contém as informações do grafo
 @return: matriz  de adjascência n_vxn_v  que indica os vértices incidentes sobre outro
 */
-int **fillMatrix(int n_v,int *n_e, FILE *arq);
-/*
-@brief:cria um vetor de n posições que indica o grau de cada vértice, varre a matriz de adjascência, e para cada  posição i,j da matriz
-com valor diferente de 0, adiciona matriz[i][j] a posição j do vetor.
-@param matriz: matriz de adjascência que marca as incidências de graus
-@param n: ordem da matriz = número de vértices
-@return:  vetor com o grau de cada vértice
-*/
-int *countsDegreesMatrix(int **matriz,int n);
+int **fillMatrix(int n_v,int *n_e,int *degree_v, FILE *arq);
 /*
 @brief: imprime matriz de adjascência (vértices incidentes sobre cada vértice)
 @param matriz: matriz de adjascência que marca as incidências de graus

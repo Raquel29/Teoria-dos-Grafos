@@ -10,7 +10,7 @@ typedef struct grafo{
 }grafo;
 /*
 @brief: Abre o aqruivo a ser lido, aloca na memória um espaço para a estrutura grafo, ler e armazena o número de vértices do nosso grafo,
-chama as funções que contabilizam o grau de cada vértice, cria  lista de adjascência ou matriz de adjascência (de acordo com a opção escolhida pelo usuário).
+chama as funções que cria  lista de adjascência ou matriz de adjascência (de acordo com a opção escolhida pelo usuário).
 @param g: ponteiro para o grafo alocado na memória
 @param resp: armazena a opção escolhida pelo usuário, 1=gerar matriz de adjascência, 2=gerar lista de adjascência
 */

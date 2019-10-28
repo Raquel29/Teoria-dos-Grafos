@@ -10,13 +10,12 @@ void initializeGraph(grafo **g, int resp){
   }
   (*g) = malloc(sizeof(grafo));
   fscanf(arq,"%d",&((*g)->n_v));
-
+  (*g)->degree_v = calloc((*g)->n_v,sizeof(int));
   if(resp==1){
-    (*g)->matAdj =fillMatrix((*g)->n_v,&((*g)->n_e),arq);
-    (*g)->degree_v = countsDegreesMatrix((*g)->matAdj,(*g)->n_v);
+    (*g)->matAdj =fillMatrix((*g)->n_v,&((*g)->n_e),(*g)->degree_v,arq);
   }else if(resp==2){
-    (*g)->listAdj =fillList((*g)->n_v,&((*g)->n_e),arq);
-    (*g)->degree_v = countsDegreesList((*g)->listAdj,(*g)->n_v);
+    (*g)->listAdj =fillList((*g)->n_v,&((*g)->n_e),(*g)->degree_v,arq);
+
   }
   fclose(arq);
 }

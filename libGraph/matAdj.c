@@ -14,7 +14,7 @@ int **allocateMatrix(int n){
   }
   return matriz;
 }
-int **fillMatrix(int n_v,int *n_e, FILE *arq){
+int **fillMatrix(int n_v,int *n_e,int *degree_v, FILE *arq){
   int i,**matriz = allocateMatrix(n_v), v1,v2;
   while(1){
     if(fscanf(arq,"%d %d",&v1,&v2)!=EOF){
@@ -24,7 +24,8 @@ int **fillMatrix(int n_v,int *n_e, FILE *arq){
         v2= v2-1;
         matriz[v1][v2]=1;//indica ligação entre o vértice v1 e o v2
         matriz[v2][v1]=1;
-        if(v1==v2)matriz[v1][v2]=2;//existe um laço no vértice v1 e v2
+        degree_v[v1]+=1;
+        degree_v[v2]+=1;
       }
       else{
         printf("Os vertices informados no arquivo nao existem!\n");
@@ -35,16 +36,6 @@ int **fillMatrix(int n_v,int *n_e, FILE *arq){
     }
   }
   return matriz;
-}
-int *countsDegreesMatrix(int **matriz,int n){
-  int i,j;
-  int *graus= calloc(n,sizeof(int));
-  for(i=0;i<n;i++){
-    for(j=0;j<n;j++){
-      if(matriz[i][j]>0)graus[j]+=matriz[i][j];//o grafo pode ser ciclico e por isso não incrementamos de 1 em 1 cada posição
-    }
-  }
-  return graus;
 }
 void printMatAdj(int **matriz,int n){
   int i,j;

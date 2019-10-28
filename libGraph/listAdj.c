@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listAdj.h"
-listVertex *fillList(int n_v,int *n_e, FILE *arq){
+listVertex *fillList(int n_v,int *n_e,int *degree_v, FILE *arq){
   int v1,v2;
   listVertex *vetor=createVectorList(n_v);
   while(1){
@@ -9,6 +9,8 @@ listVertex *fillList(int n_v,int *n_e, FILE *arq){
       (*n_e)++;//número de arestas
       if((v1<=n_v && v2<=n_v) && (v1>0 && v2>0)){/*Os rótulos dos vértices não podem ser maior que o número de vértices,nem negativos*/
         newNode(vetor,v1,v2);
+        degree_v[v1-1]+=1;//incrementa o grau do vértice v1
+        degree_v[v2-1]+=1;//incrementa o grau do vértice v2
       }
       else{
         printf("Os vertices informados no arquivo nao existem!\n");
@@ -24,8 +26,7 @@ listVertex *createVectorList(int n_v){
   listVertex *vetor=calloc(n_v,sizeof(listVertex));
   int i;
   for(i=0;i<n_v;i++){
-    /*Para cada posição do nosso vetor de listas:o grau de um vetor de listas vazio é 0, a cabeça e a cauda tem valor NULL*/
-    vetor[i].degree=0;
+    /*Para cada posição do nosso vetor de listas:a cabeça e a cauda tem valor NULL*/
     vetor[i].head=NULL;
     vetor[i].tail=NULL;
   }
@@ -40,7 +41,7 @@ void newNode(listVertex *vetor,int v1,int v2){
   nodeV1->vertex = v1;
 
   //vértice 1 se liga ao 2
-  if(vetor[v1-1].degree==0){/*O vértice v1 até o momento não tinha nenhum vértice incidente sobre ele*/
+  if(vetor[v1-1].head==NULL){/*O vértice v1 até o momento não tinha nenhum vértice incidente sobre ele*/
     vetor[v1-1].head=nodeV2;
     nodeV1->next=NULL;
     nodeV1->prev=NULL;
@@ -51,10 +52,10 @@ void newNode(listVertex *vetor,int v1,int v2){
     nodeV2->next=NULL;
   }
   vetor[v1-1].tail=nodeV2;//a nova cauda é o último elemento
-  vetor[v1-1].degree+=1;
-  
+
+
   //vértice 2 se liga ao 1
-  if(vetor[v2-1].degree==0){/*O vértice v2 até o momento não tinha nenhum vértice incidente sobre ele*/
+  if(vetor[v2-1].head==NULL){/*O vértice v2 até o momento não tinha nenhum vértice incidente sobre ele*/
     vetor[v2-1].head=nodeV1;
     nodeV1->next=NULL;
     nodeV1->prev=NULL;
@@ -65,17 +66,8 @@ void newNode(listVertex *vetor,int v1,int v2){
     nodeV1->next=NULL;
   }
   vetor[v2-1].tail=nodeV1;//a nova cauda é o último elemento
-  vetor[v2-1].degree+=1;
 }
 
-int *countsDegreesList(listVertex *vetor,int n){
-  int i;
-  int *graus= calloc(n,sizeof(int));
-  for(i=0;i<n;i++){
-    graus[i] = vetor[i].degree;
-  }
-  return graus;
-}
 void printListAdj(listVertex *vetor,int n){
   int i;
   for(i=0;i<n;i++){
