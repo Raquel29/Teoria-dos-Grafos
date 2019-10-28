@@ -5,8 +5,3 @@
 *Trabalho desenvolvido como requisito de avaliação parcial da disciplina de Teoria dos Grafos, ministrada
 *pelo professor Raimundo Cláudios Vasconcelos no segundo semestre de 2019.
 */
-#ifndef FINDTREE
-#define FINDTREE
-//Uma árvore é uma fila!!!
-
-#endif
